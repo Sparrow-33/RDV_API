@@ -82,6 +82,21 @@
 
     }
 
+    //function update user
+    public function updateUserById($data){
+        $this->db->query('UPDATE user SET name = :name, email = :email, description = :description , phone = :phone  WHERE ID = :id');
+        $this->db->bind(':id', $data['id']);
+        $this->db->bind(':name', $data['name']);
+        $this->db->bind(':email', $data['email']);
+        $this->db->bind(':description', $data['description']);
+        $this->db->bind(':phone', $data['phone']);
+        if($this->db->execute()){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
       public function findUserByID($NID){
           $this->db->query('SELECT * FROM patient WHERE NID = :NID');
           // Bind value

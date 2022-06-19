@@ -125,6 +125,33 @@ class Users extends Controller
   }
 
 
+  //function update a user by id
+  public function updateUserById()
+  {
+    $result = json_decode(file_get_contents('php://input'));
+    $id = $result->id;
+    $name = $result->name;
+    $email = $result->email;
+    $description = $result->description;
+    $phone = $result->phone;
+
+    $data = [
+      'id' => $id,
+      'name' => $name,
+      'email' => $email,
+      'description' => $description,
+      'phone' => $phone
+    ];
+    
+
+    $user = $this->userModel->updateUserById($data);
+    printf(json_encode($user));
+  }
+
+  
+
+
+
 
   public function createArticle()
   {
