@@ -73,6 +73,15 @@
         return $row->ID;
     }
 
+    // function get user by id
+    public function getUserById($id){
+        $this->db->query('SELECT * FROM user WHERE ID = :id');
+        $this->db->bind(':id', $id);
+        $row = $this->db->single();
+        return $row;
+
+    }
+
       public function findUserByID($NID){
           $this->db->query('SELECT * FROM patient WHERE NID = :NID');
           // Bind value
@@ -105,16 +114,17 @@
       }
 
       //function to get specific article
-      public function getArticle($id){
-          $this->db->query('SELECT * FROM article WHERE ID = :id');
-          $this->db->bind(':id', $id);
+      public function getArticle($data){
+          $this->db->query('SELECT A.ID, A.title, A.cover, A.body, U.name, U.profile, C.CatName, A.time  FROM article A, user U, categories C WHERE A.ID = :id AND A.UID = U.ID AND A.cat_ID = C.IDC');
+          $this->db->bind(':id', $data['id']);
           $row = $this->db->single();
           return $row;
       }
 
+      
       //function to post comment
       public function postComment($data){
-          $this->db->query('INSERT INTO comments (UID, comment, article_ID) VALUES( :UID, :comment, :article_id)');
+          $this->db->query('INSERT INTO `comments`(`UID`, `comment`, `article_ID`) VALUES( :UID, :comment, :article_id)');
           // Bind values
           $this->db->bind(':UID', $data['UID']);
           $this->db->bind(':comment', $data['comment']);
@@ -125,6 +135,15 @@
           } else {
               return false;
           }
+      }
+
+      //function to get all comments
+      public function getComments($id){
+          $this->db->query('SELECT C.CID , C.comment , U.profile, U.name, C.time FROM comments C, user U WHERE C.UID = U.ID AND C.article_ID = :id ORDER BY C.time DESC');
+          
+          $this->db->bind(':id', $id);
+          $rows = $this->db->resultSet();
+          return $rows;
       }
 
       //function to get all categories

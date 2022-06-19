@@ -64,6 +64,8 @@ class Users extends Controller
     }
   }
 
+
+
   public function login()
   {
     $result = json_decode(file_get_contents('php://input'));
@@ -113,7 +115,14 @@ class Users extends Controller
   }
 
 
-
+  //function get a user by id
+  public function getUserById()
+  {
+    $result = json_decode(file_get_contents('php://input'));
+    $id = $result->id;
+    $user = $this->userModel->getUserById($id);
+    printf(json_encode($user));
+  }
 
 
 
@@ -212,9 +221,14 @@ class Users extends Controller
   {
     $result = json_decode(file_get_contents('php://input'));
 
-    $id = $result->id;
+    // $id = $result->id;
 
-    $article = $this->userModel->getArticle($id);
+    $data=[
+      "id"=>$result->id,
+    ];
+    
+
+    $article = $this->userModel->getArticle($data);
     print_r(json_encode($article));
 
   }
@@ -230,10 +244,11 @@ class Users extends Controller
 
     $data = [
       "UID" => $id,
-      "comment" => $comment,
+      "comment" => $comment ,
       "article_id" => $article_id
     ];
-
+    // echo json_encode($id);
+    // $this->userModel->postComment($data);
     if ($this->userModel->postComment($data)) {
       print_r(json_encode(array(
         "message" => "success",
@@ -243,6 +258,24 @@ class Users extends Controller
         "message" => "error",
       )));
     }
+
+
+    // print_r(json_encode(array(
+    //       "message" => $data['comment'],
+    //     )));
+
+  }
+
+  //function to get all comments
+  public function getComments()
+  {
+    $result = json_decode(file_get_contents('php://input'));
+
+    $id = $result->id;
+
+    $comments = $this->userModel->getComments($id);
+    print_r(json_encode($comments));
+
   }
 
 //function to get all categories
