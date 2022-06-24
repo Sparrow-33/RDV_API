@@ -102,4 +102,75 @@ class BlogModel {
 
     }
 
+    public function deleteArticle($id){
+
+      $this->db->query('DELETE  FROM article WHERE ID = :id');
+
+      $this->db->bind(':id', $id);
+      $result = $this->db->execute();
+
+      if( $result){
+        return true;
+      } else {
+        return false;
+      }
+
+    }
+
+    public function countComment(){
+      $this->db->query('SELECT * FROM comments');
+      $this->db->resultSet();
+      $num = $this->db->rowCount();
+
+      
+
+      if( $num){
+        return $num;
+      } else {
+        return $num;
+      }
+    }
+
+    public function countArticle(){
+      $this->db->query('SELECT * FROM article');
+      $this->db->resultSet();
+      $num = $this->db->rowCount();
+
+      
+
+      if( $num){
+        return $num;
+      } else {
+        return $num;
+      }
+    }
+
+    public function countUsers(){
+      $this->db->query('SELECT * FROM user');
+      $this->db->resultSet();
+      $num = $this->db->rowCount();
+
+      
+
+      if( $num){
+        return $num;
+      } else {
+        return $num;
+      }
+    }
+
+    public function countLikes(){
+      $this->db->query('SELECT * FROM likes');
+      $this->db->resultSet();
+      $num = $this->db->rowCount();
+
+      
+
+      if( $num){
+        return $num;
+      } else {
+        return $num;
+      }
+    }
+
 }    

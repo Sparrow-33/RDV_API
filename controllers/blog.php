@@ -118,6 +118,80 @@
 
         }
 
+        //delete comments
+
+        public function deleteArticle(){
+
+            $result = json_decode(file_get_contents('php://input'));
+
+            $id = $result->id;
+            $art = $this->articleModel->deleteArticle($id);
+
+            if($art){
+                echo json_encode(['message' => true]);
+            } else {
+                echo json_encode(['message' => false]);
+            }
+        
+        }
+
+        function myComments(){
+
+            $result = json_decode(file_get_contents('php://input'));
+
+            $UID = $result->id;
+            $CID = $result->CID;
+        }
+
+        function countComment(){
+
+            $comment = $this->articleModel->countComment();
+
+            if($comment){
+                echo json_encode($comment);
+            } else {
+                echo json_encode(['message' => false]);
+            }
+
+            
+        }
+
+
+        function countArticle(){
+
+            $article = $this->articleModel->countArticle();
+
+            if($article){
+                echo json_encode($article);
+            } else {
+                echo json_encode(['message' => false]);
+            }
+
+        }
+
+        function countUsers(){
+
+            $users = $this->articleModel->countUsers();
+
+            if($users){
+                echo json_encode($users);
+            } else {
+                echo json_encode(['message' => false]);
+            }
+
+        }
+
+        function countLikes(){
+            $like = $this->articleModel->countLikes();
+
+            if($like){
+                echo json_encode($like);
+            } else {
+                echo json_encode(['message' => false]);
+            }
+
+        }
+
 
 
 

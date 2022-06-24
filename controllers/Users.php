@@ -148,6 +148,18 @@ class Users extends Controller
     printf(json_encode($user));
   }
 
+  //function to get all Users
+
+  public function getAllUsers(){
+
+    $users = $this->userModel->getAllUsers();
+
+    if($users){
+      printf(json_encode($users));
+    }else{
+      printf(json_encode(false));
+    }
+  }
   
 
 

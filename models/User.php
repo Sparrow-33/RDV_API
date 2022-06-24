@@ -113,6 +113,16 @@
       }
 
 
+      // Get all users
+
+      public function getAllUsers(){
+
+        $this->db->query('SELECT ID, name, email, STATUS, profile, created_at FROM user ');
+        $rows = $this->db->resultSet();
+        return $rows;
+      }
+
+
       public function createArticle($data){
           $this->db->query('INSERT INTO article ( title, body, cover, cat_ID) VALUES( :title, :content,  :article_cover, :cat_ID)');
           // Bind values
